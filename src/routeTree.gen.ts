@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as VerificadorRouteImport } from './routes/verificador'
 import { Route as RankingRouteImport } from './routes/ranking'
 import { Route as FabricaRouteImport } from './routes/fabrica'
+import { Route as CadastroRouteImport } from './routes/cadastro'
 import { Route as BuscaRouteImport } from './routes/busca'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -30,6 +31,11 @@ const FabricaRoute = FabricaRouteImport.update({
   path: '/fabrica',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CadastroRoute = CadastroRouteImport.update({
+  id: '/cadastro',
+  path: '/cadastro',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BuscaRoute = BuscaRouteImport.update({
   id: '/busca',
   path: '/busca',
@@ -44,6 +50,7 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/busca': typeof BuscaRoute
+  '/cadastro': typeof CadastroRoute
   '/fabrica': typeof FabricaRoute
   '/ranking': typeof RankingRoute
   '/verificador': typeof VerificadorRoute
@@ -51,6 +58,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/busca': typeof BuscaRoute
+  '/cadastro': typeof CadastroRoute
   '/fabrica': typeof FabricaRoute
   '/ranking': typeof RankingRoute
   '/verificador': typeof VerificadorRoute
@@ -59,21 +67,36 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/busca': typeof BuscaRoute
+  '/cadastro': typeof CadastroRoute
   '/fabrica': typeof FabricaRoute
   '/ranking': typeof RankingRoute
   '/verificador': typeof VerificadorRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/busca' | '/fabrica' | '/ranking' | '/verificador'
+  fullPaths:
+    | '/'
+    | '/busca'
+    | '/cadastro'
+    | '/fabrica'
+    | '/ranking'
+    | '/verificador'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/busca' | '/fabrica' | '/ranking' | '/verificador'
-  id: '__root__' | '/' | '/busca' | '/fabrica' | '/ranking' | '/verificador'
+  to: '/' | '/busca' | '/cadastro' | '/fabrica' | '/ranking' | '/verificador'
+  id:
+    | '__root__'
+    | '/'
+    | '/busca'
+    | '/cadastro'
+    | '/fabrica'
+    | '/ranking'
+    | '/verificador'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BuscaRoute: typeof BuscaRoute
+  CadastroRoute: typeof CadastroRoute
   FabricaRoute: typeof FabricaRoute
   RankingRoute: typeof RankingRoute
   VerificadorRoute: typeof VerificadorRoute
@@ -102,6 +125,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FabricaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cadastro': {
+      id: '/cadastro'
+      path: '/cadastro'
+      fullPath: '/cadastro'
+      preLoaderRoute: typeof CadastroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/busca': {
       id: '/busca'
       path: '/busca'
@@ -122,6 +152,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BuscaRoute: BuscaRoute,
+  CadastroRoute: CadastroRoute,
   FabricaRoute: FabricaRoute,
   RankingRoute: RankingRoute,
   VerificadorRoute: VerificadorRoute,
