@@ -85,7 +85,7 @@ function MinhasObras() {
               Minhas <span className="text-gradient">Obras</span>
             </h1>
           </div>
-          <Link to="/painel/registrar" className="btn-neon inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold">
+          <Link to="/registrar" className="btn-neon inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold">
             <Plus className="h-4 w-4" /> Registrar nova
           </Link>
         </div>
@@ -99,7 +99,7 @@ function MinhasObras() {
             <p className="mx-auto mt-1 max-w-md text-sm text-muted-foreground">
               Comece agora — o primeiro registro é grátis com sua conta.
             </p>
-            <Link to="/painel/registrar" className="btn-neon mt-5 inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold">
+            <Link to="/registrar" className="btn-neon mt-5 inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold">
               <Plus className="h-4 w-4" /> Registrar minha primeira obra
             </Link>
           </div>

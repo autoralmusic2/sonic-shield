@@ -126,7 +126,7 @@ function Registrar() {
       });
       if (error) throw error;
       toast.success(`Obra registrada! Código ${code}`);
-      navigate({ to: "/painel/obras" });
+      navigate({ to: "/obras" });
     } catch (e: any) {
       toast.error(e.message || "Falha ao registrar obra");
     } finally {
