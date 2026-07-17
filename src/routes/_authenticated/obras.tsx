@@ -30,6 +30,13 @@ type Obra = {
   co_autores: { nome: string; participacao: number }[];
   hash_sha256: string;
   registered_at: string;
+  tipo_registro?: string | null;
+  ia_nivel?: string | null;
+  ia_detalhes?: string | null;
+  hash_arquivo_sha256?: string | null;
+  hash_arquivo_sha512?: string | null;
+  hash_sha512?: string | null;
+  endereco?: Record<string, string> | null;
 };
 
 function MinhasObras() {
@@ -41,7 +48,7 @@ function MinhasObras() {
     if (!user) return;
     supabase
       .from("obras")
-      .select("id, verification_code, titulo, genero, idioma, ano, isrc, descricao, co_autores, hash_sha256, registered_at")
+      .select("id, verification_code, titulo, genero, idioma, ano, isrc, descricao, co_autores, hash_sha256, hash_sha512, hash_arquivo_sha256, hash_arquivo_sha512, tipo_registro, ia_nivel, ia_detalhes, endereco, registered_at")
       .eq("user_id", user.id)
       .order("registered_at", { ascending: false })
       .then(({ data, error }) => {
@@ -57,6 +64,10 @@ function MinhasObras() {
   }, [user]);
 
   async function downloadPDF(o: Obra) {
+    const end = o.endereco || {};
+    const endStr = end.logradouro
+      ? `${end.logradouro}, ${end.numero || "s/n"}${end.complemento ? " - " + end.complemento : ""} — ${end.bairro || ""}, ${end.cidade || ""}/${end.uf || ""} · CEP ${end.cep || ""}`
+      : null;
     await generateCertificatePDF({
       verification_code: o.verification_code,
       titulo: o.titulo,
@@ -67,6 +78,13 @@ function MinhasObras() {
       descricao: o.descricao,
       co_autores: o.co_autores ?? [],
       hash_sha256: o.hash_sha256,
+      hash_sha512: o.hash_sha512 ?? null,
+      hash_arquivo_sha256: o.hash_arquivo_sha256 ?? null,
+      hash_arquivo_sha512: o.hash_arquivo_sha512 ?? null,
+      tipo_registro: o.tipo_registro ?? null,
+      ia_nivel: o.ia_nivel ?? null,
+      ia_detalhes: o.ia_detalhes ?? null,
+      endereco: endStr,
       registered_at: o.registered_at,
       autor_nome: profile?.nome_completo || user?.email || "",
       autor_documento: profile?.documento ?? null,

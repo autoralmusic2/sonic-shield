@@ -11,6 +11,13 @@ export type CertificatePayload = {
   descricao: string | null;
   co_autores: { nome: string; participacao: number }[];
   hash_sha256: string;
+  hash_sha512?: string | null;
+  hash_arquivo_sha256?: string | null;
+  hash_arquivo_sha512?: string | null;
+  tipo_registro?: string | null;
+  ia_nivel?: string | null;
+  ia_detalhes?: string | null;
+  endereco?: string | null;
   registered_at: string;
   autor_nome: string;
   autor_documento: string | null;
@@ -79,7 +86,10 @@ export async function generateCertificatePDF(p: CertificatePayload) {
 
   row("Autor(a)", `${p.autor_nome}${p.autor_artistico ? ` — "${p.autor_artistico}"` : ""}`);
   if (p.autor_documento) row("Documento", p.autor_documento);
+  if (p.endereco) row("Endereço declarado", p.endereco);
   row("Gênero / Idioma / Ano", `${p.genero || "—"} · ${p.idioma || "—"} · ${p.ano || "—"}`);
+  if (p.tipo_registro) row("Tipo de registro", p.tipo_registro);
+  if (p.ia_nivel) row("Declaração de IA", `${p.ia_nivel}${p.ia_detalhes ? ` — ${p.ia_detalhes}` : ""}`);
   if (p.isrc) row("ISRC", p.isrc);
   if (p.co_autores.length) {
     row(
@@ -98,12 +108,24 @@ export async function generateCertificatePDF(p: CertificatePayload) {
   doc.setFont("helvetica", "bold");
   doc.setFontSize(8);
   doc.setTextColor(120, 130, 170);
-  doc.text("HASH SHA-256 DA OBRA", 60, H - 180);
+  doc.text("HASH SHA-256 DA OBRA (metadados)", 60, H - 180);
   doc.setFont("courier", "normal");
   doc.setFontSize(9);
   doc.setTextColor(94, 234, 212);
   const hashLines = doc.splitTextToSize(p.hash_sha256, W - 120);
   doc.text(hashLines, 60, H - 165);
+
+  if (p.hash_arquivo_sha256) {
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(8);
+    doc.setTextColor(120, 130, 170);
+    doc.text("HASH SHA-256 DO ARQUIVO", 60, H - 138);
+    doc.setFont("courier", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(147, 197, 253);
+    const fLines = doc.splitTextToSize(p.hash_arquivo_sha256, W - 120);
+    doc.text(fLines, 60, H - 126);
+  }
 
   // Footer
   doc.setFont("helvetica", "normal");
