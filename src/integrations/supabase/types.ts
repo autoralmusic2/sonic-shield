@@ -14,6 +14,60 @@ export type Database = {
   }
   public: {
     Tables: {
+      obras: {
+        Row: {
+          ano: number | null
+          co_autores: Json
+          created_at: string
+          descricao: string | null
+          genero: string | null
+          hash_sha256: string
+          id: string
+          idioma: string | null
+          isrc: string | null
+          letra: string | null
+          registered_at: string
+          titulo: string
+          updated_at: string
+          user_id: string
+          verification_code: string
+        }
+        Insert: {
+          ano?: number | null
+          co_autores?: Json
+          created_at?: string
+          descricao?: string | null
+          genero?: string | null
+          hash_sha256: string
+          id?: string
+          idioma?: string | null
+          isrc?: string | null
+          letra?: string | null
+          registered_at?: string
+          titulo: string
+          updated_at?: string
+          user_id: string
+          verification_code: string
+        }
+        Update: {
+          ano?: number | null
+          co_autores?: Json
+          created_at?: string
+          descricao?: string | null
+          genero?: string | null
+          hash_sha256?: string
+          id?: string
+          idioma?: string | null
+          isrc?: string | null
+          letra?: string | null
+          registered_at?: string
+          titulo?: string
+          updated_at?: string
+          user_id?: string
+          verification_code?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
