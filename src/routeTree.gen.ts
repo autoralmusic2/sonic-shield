@@ -19,7 +19,6 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PortfolioSlugRouteImport } from './routes/portfolio.$slug'
 import { Route as AuthenticatedSegurancaRouteImport } from './routes/_authenticated/seguranca'
-import { Route as AuthenticatedRegistrarRouteImport } from './routes/_authenticated/registrar'
 import { Route as AuthenticatedPortfolioRouteImport } from './routes/_authenticated/portfolio'
 import { Route as AuthenticatedPerfilRouteImport } from './routes/_authenticated/perfil'
 import { Route as AuthenticatedPainelRouteImport } from './routes/_authenticated/painel'
@@ -76,11 +75,6 @@ const AuthenticatedSegurancaRoute = AuthenticatedSegurancaRouteImport.update({
   path: '/seguranca',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedRegistrarRoute = AuthenticatedRegistrarRouteImport.update({
-  id: '/registrar',
-  path: '/registrar',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
 const AuthenticatedPortfolioRoute = AuthenticatedPortfolioRouteImport.update({
   id: '/portfolio',
   path: '/portfolio',
@@ -126,7 +120,6 @@ export interface FileRoutesByFullPath {
   '/painel': typeof AuthenticatedPainelRoute
   '/perfil': typeof AuthenticatedPerfilRoute
   '/portfolio': typeof AuthenticatedPortfolioRoute
-  '/registrar': typeof AuthenticatedRegistrarRoute
   '/seguranca': typeof AuthenticatedSegurancaRoute
   '/portfolio/$slug': typeof PortfolioSlugRoute
 }
@@ -144,7 +137,6 @@ export interface FileRoutesByTo {
   '/painel': typeof AuthenticatedPainelRoute
   '/perfil': typeof AuthenticatedPerfilRoute
   '/portfolio': typeof AuthenticatedPortfolioRoute
-  '/registrar': typeof AuthenticatedRegistrarRoute
   '/seguranca': typeof AuthenticatedSegurancaRoute
   '/portfolio/$slug': typeof PortfolioSlugRoute
 }
@@ -164,7 +156,6 @@ export interface FileRoutesById {
   '/_authenticated/painel': typeof AuthenticatedPainelRoute
   '/_authenticated/perfil': typeof AuthenticatedPerfilRoute
   '/_authenticated/portfolio': typeof AuthenticatedPortfolioRoute
-  '/_authenticated/registrar': typeof AuthenticatedRegistrarRoute
   '/_authenticated/seguranca': typeof AuthenticatedSegurancaRoute
   '/portfolio/$slug': typeof PortfolioSlugRoute
 }
@@ -184,7 +175,6 @@ export interface FileRouteTypes {
     | '/painel'
     | '/perfil'
     | '/portfolio'
-    | '/registrar'
     | '/seguranca'
     | '/portfolio/$slug'
   fileRoutesByTo: FileRoutesByTo
@@ -202,7 +192,6 @@ export interface FileRouteTypes {
     | '/painel'
     | '/perfil'
     | '/portfolio'
-    | '/registrar'
     | '/seguranca'
     | '/portfolio/$slug'
   id:
@@ -221,7 +210,6 @@ export interface FileRouteTypes {
     | '/_authenticated/painel'
     | '/_authenticated/perfil'
     | '/_authenticated/portfolio'
-    | '/_authenticated/registrar'
     | '/_authenticated/seguranca'
     | '/portfolio/$slug'
   fileRoutesById: FileRoutesById
@@ -310,13 +298,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSegurancaRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/registrar': {
-      id: '/_authenticated/registrar'
-      path: '/registrar'
-      fullPath: '/registrar'
-      preLoaderRoute: typeof AuthenticatedRegistrarRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
     '/_authenticated/portfolio': {
       id: '/_authenticated/portfolio'
       path: '/portfolio'
@@ -369,7 +350,6 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedPainelRoute: typeof AuthenticatedPainelRoute
   AuthenticatedPerfilRoute: typeof AuthenticatedPerfilRoute
   AuthenticatedPortfolioRoute: typeof AuthenticatedPortfolioRoute
-  AuthenticatedRegistrarRoute: typeof AuthenticatedRegistrarRoute
   AuthenticatedSegurancaRoute: typeof AuthenticatedSegurancaRoute
 }
 
@@ -380,7 +360,6 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedPainelRoute: AuthenticatedPainelRoute,
   AuthenticatedPerfilRoute: AuthenticatedPerfilRoute,
   AuthenticatedPortfolioRoute: AuthenticatedPortfolioRoute,
-  AuthenticatedRegistrarRoute: AuthenticatedRegistrarRoute,
   AuthenticatedSegurancaRoute: AuthenticatedSegurancaRoute,
 }
 
