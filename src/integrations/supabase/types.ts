@@ -64,51 +64,90 @@ export type Database = {
       }
       obras: {
         Row: {
+          aceite_legal_at: string | null
           ano: number | null
+          arquivo_mime: string | null
+          arquivo_nome: string | null
+          arquivo_path: string | null
+          arquivo_tamanho: number | null
           co_autores: Json
           created_at: string
           descricao: string | null
+          endereco: Json
           genero: string | null
+          hash_arquivo_sha256: string | null
+          hash_arquivo_sha512: string | null
           hash_sha256: string
+          hash_sha512: string | null
+          ia_detalhes: string | null
+          ia_nivel: string
           id: string
           idioma: string | null
           isrc: string | null
           letra: string | null
+          qualificacao: Json
           registered_at: string
+          tipo_registro: string
           titulo: string
           updated_at: string
           user_id: string
           verification_code: string
         }
         Insert: {
+          aceite_legal_at?: string | null
           ano?: number | null
+          arquivo_mime?: string | null
+          arquivo_nome?: string | null
+          arquivo_path?: string | null
+          arquivo_tamanho?: number | null
           co_autores?: Json
           created_at?: string
           descricao?: string | null
+          endereco?: Json
           genero?: string | null
+          hash_arquivo_sha256?: string | null
+          hash_arquivo_sha512?: string | null
           hash_sha256: string
+          hash_sha512?: string | null
+          ia_detalhes?: string | null
+          ia_nivel?: string
           id?: string
           idioma?: string | null
           isrc?: string | null
           letra?: string | null
+          qualificacao?: Json
           registered_at?: string
+          tipo_registro?: string
           titulo: string
           updated_at?: string
           user_id: string
           verification_code: string
         }
         Update: {
+          aceite_legal_at?: string | null
           ano?: number | null
+          arquivo_mime?: string | null
+          arquivo_nome?: string | null
+          arquivo_path?: string | null
+          arquivo_tamanho?: number | null
           co_autores?: Json
           created_at?: string
           descricao?: string | null
+          endereco?: Json
           genero?: string | null
+          hash_arquivo_sha256?: string | null
+          hash_arquivo_sha512?: string | null
           hash_sha256?: string
+          hash_sha512?: string | null
+          ia_detalhes?: string | null
+          ia_nivel?: string
           id?: string
           idioma?: string | null
           isrc?: string | null
           letra?: string | null
+          qualificacao?: Json
           registered_at?: string
+          tipo_registro?: string
           titulo?: string
           updated_at?: string
           user_id?: string
@@ -119,38 +158,62 @@ export type Database = {
       profiles: {
         Row: {
           avatar_url: string | null
+          bairro: string | null
           bio: string | null
+          cep: string | null
+          cidade: string | null
+          complemento: string | null
           created_at: string
           documento: string | null
+          email: string | null
           id: string
+          logradouro: string | null
           nome_artistico: string | null
           nome_completo: string
+          numero: string | null
           slug: string | null
           telefone: string | null
+          uf: string | null
           updated_at: string
         }
         Insert: {
           avatar_url?: string | null
+          bairro?: string | null
           bio?: string | null
+          cep?: string | null
+          cidade?: string | null
+          complemento?: string | null
           created_at?: string
           documento?: string | null
+          email?: string | null
           id: string
+          logradouro?: string | null
           nome_artistico?: string | null
           nome_completo?: string
+          numero?: string | null
           slug?: string | null
           telefone?: string | null
+          uf?: string | null
           updated_at?: string
         }
         Update: {
           avatar_url?: string | null
+          bairro?: string | null
           bio?: string | null
+          cep?: string | null
+          cidade?: string | null
+          complemento?: string | null
           created_at?: string
           documento?: string | null
+          email?: string | null
           id?: string
+          logradouro?: string | null
           nome_artistico?: string | null
           nome_completo?: string
+          numero?: string | null
           slug?: string | null
           telefone?: string | null
+          uf?: string | null
           updated_at?: string
         }
         Relationships: []
@@ -160,7 +223,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      consume_credit: {
+        Args: { _motivo: string; _user: string }
+        Returns: number
+      }
     }
     Enums: {
       [_ in never]: never
