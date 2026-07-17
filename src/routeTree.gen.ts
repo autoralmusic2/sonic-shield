@@ -12,8 +12,6 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as VerificadorRouteImport } from './routes/verificador'
 import { Route as RankingRouteImport } from './routes/ranking'
 import { Route as FabricaRouteImport } from './routes/fabrica'
-import { Route as EntrarRouteImport } from './routes/entrar'
-import { Route as CadastroRouteImport } from './routes/cadastro'
 import { Route as BuscaRouteImport } from './routes/busca'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -32,16 +30,6 @@ const FabricaRoute = FabricaRouteImport.update({
   path: '/fabrica',
   getParentRoute: () => rootRouteImport,
 } as any)
-const EntrarRoute = EntrarRouteImport.update({
-  id: '/entrar',
-  path: '/entrar',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CadastroRoute = CadastroRouteImport.update({
-  id: '/cadastro',
-  path: '/cadastro',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const BuscaRoute = BuscaRouteImport.update({
   id: '/busca',
   path: '/busca',
@@ -56,8 +44,6 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/busca': typeof BuscaRoute
-  '/cadastro': typeof CadastroRoute
-  '/entrar': typeof EntrarRoute
   '/fabrica': typeof FabricaRoute
   '/ranking': typeof RankingRoute
   '/verificador': typeof VerificadorRoute
@@ -65,8 +51,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/busca': typeof BuscaRoute
-  '/cadastro': typeof CadastroRoute
-  '/entrar': typeof EntrarRoute
   '/fabrica': typeof FabricaRoute
   '/ranking': typeof RankingRoute
   '/verificador': typeof VerificadorRoute
@@ -75,47 +59,21 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/busca': typeof BuscaRoute
-  '/cadastro': typeof CadastroRoute
-  '/entrar': typeof EntrarRoute
   '/fabrica': typeof FabricaRoute
   '/ranking': typeof RankingRoute
   '/verificador': typeof VerificadorRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/busca'
-    | '/cadastro'
-    | '/entrar'
-    | '/fabrica'
-    | '/ranking'
-    | '/verificador'
+  fullPaths: '/' | '/busca' | '/fabrica' | '/ranking' | '/verificador'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/busca'
-    | '/cadastro'
-    | '/entrar'
-    | '/fabrica'
-    | '/ranking'
-    | '/verificador'
-  id:
-    | '__root__'
-    | '/'
-    | '/busca'
-    | '/cadastro'
-    | '/entrar'
-    | '/fabrica'
-    | '/ranking'
-    | '/verificador'
+  to: '/' | '/busca' | '/fabrica' | '/ranking' | '/verificador'
+  id: '__root__' | '/' | '/busca' | '/fabrica' | '/ranking' | '/verificador'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BuscaRoute: typeof BuscaRoute
-  CadastroRoute: typeof CadastroRoute
-  EntrarRoute: typeof EntrarRoute
   FabricaRoute: typeof FabricaRoute
   RankingRoute: typeof RankingRoute
   VerificadorRoute: typeof VerificadorRoute
@@ -144,20 +102,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FabricaRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/entrar': {
-      id: '/entrar'
-      path: '/entrar'
-      fullPath: '/entrar'
-      preLoaderRoute: typeof EntrarRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/cadastro': {
-      id: '/cadastro'
-      path: '/cadastro'
-      fullPath: '/cadastro'
-      preLoaderRoute: typeof CadastroRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/busca': {
       id: '/busca'
       path: '/busca'
@@ -178,8 +122,6 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BuscaRoute: BuscaRoute,
-  CadastroRoute: CadastroRoute,
-  EntrarRoute: EntrarRoute,
   FabricaRoute: FabricaRoute,
   RankingRoute: RankingRoute,
   VerificadorRoute: VerificadorRoute,
