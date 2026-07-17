@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { ArrowLeft, ExternalLink } from "lucide-react";
+import { fetchViaCep } from "@/lib/obra-utils";
 
 export const Route = createFileRoute("/_authenticated/perfil")({
   head: () => ({
@@ -29,6 +30,14 @@ type Profile = {
   telefone: string | null;
   bio: string | null;
   avatar_url: string | null;
+  email: string | null;
+  cep: string | null;
+  logradouro: string | null;
+  numero: string | null;
+  complemento: string | null;
+  bairro: string | null;
+  cidade: string | null;
+  uf: string | null;
 };
 
 function slugify(v: string) {
@@ -53,20 +62,48 @@ function PerfilPage() {
     telefone: "",
     bio: "",
     avatar_url: "",
+    email: "",
+    cep: "",
+    logradouro: "",
+    numero: "",
+    complemento: "",
+    bairro: "",
+    cidade: "",
+    uf: "",
   });
 
   useEffect(() => {
     if (!user) return;
     supabase
       .from("profiles")
-      .select("nome_completo, documento, nome_artistico, slug, telefone, bio, avatar_url")
+      .select("nome_completo, documento, nome_artistico, slug, telefone, bio, avatar_url, email, cep, logradouro, numero, complemento, bairro, cidade, uf")
       .eq("id", user.id)
       .maybeSingle()
       .then(({ data }) => {
-        if (data) setP(data as Profile);
+        if (data) setP({ ...p, ...(data as Profile) });
+        else if (user.email) setP((prev) => ({ ...prev, email: user.email ?? "" }));
         setLoading(false);
       });
   }, [user]);
+
+  async function onCep(v: string) {
+    setP((prev) => ({ ...prev, cep: v }));
+    const digits = v.replace(/\D/g, "");
+    if (digits.length === 8) {
+      const r = await fetchViaCep(digits);
+      if (r) {
+        setP((prev) => ({
+          ...prev,
+          logradouro: r.logradouro || prev.logradouro,
+          bairro: r.bairro || prev.bairro,
+          cidade: r.localidade || prev.cidade,
+          uf: r.uf || prev.uf,
+        }));
+      } else {
+        toast.error("CEP não encontrado");
+      }
+    }
+  }
 
   async function save(e: React.FormEvent) {
     e.preventDefault();
@@ -119,6 +156,32 @@ function PerfilPage() {
               </Field>
               <Field label="URL do avatar">
                 <Input value={p.avatar_url ?? ""} onChange={(e) => setP({ ...p, avatar_url: e.target.value })} placeholder="https://…" />
+              </Field>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Field label="E-mail">
+                <Input type="email" value={p.email ?? ""} onChange={(e) => setP({ ...p, email: e.target.value })} />
+              </Field>
+              <Field label="CEP">
+                <Input value={p.cep ?? ""} onChange={(e) => onCep(e.target.value)} placeholder="00000-000" />
+              </Field>
+              <Field label="Logradouro">
+                <Input value={p.logradouro ?? ""} onChange={(e) => setP({ ...p, logradouro: e.target.value })} />
+              </Field>
+              <Field label="Número">
+                <Input value={p.numero ?? ""} onChange={(e) => setP({ ...p, numero: e.target.value })} />
+              </Field>
+              <Field label="Complemento">
+                <Input value={p.complemento ?? ""} onChange={(e) => setP({ ...p, complemento: e.target.value })} />
+              </Field>
+              <Field label="Bairro">
+                <Input value={p.bairro ?? ""} onChange={(e) => setP({ ...p, bairro: e.target.value })} />
+              </Field>
+              <Field label="Cidade">
+                <Input value={p.cidade ?? ""} onChange={(e) => setP({ ...p, cidade: e.target.value })} />
+              </Field>
+              <Field label="UF">
+                <Input value={p.uf ?? ""} onChange={(e) => setP({ ...p, uf: e.target.value.toUpperCase().slice(0, 2) })} />
               </Field>
             </div>
             <Field label="Bio">
