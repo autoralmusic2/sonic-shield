@@ -22,6 +22,7 @@ import { Route as AuthenticatedPortfolioRouteImport } from './routes/_authentica
 import { Route as AuthenticatedPerfilRouteImport } from './routes/_authenticated/perfil'
 import { Route as AuthenticatedPainelRouteImport } from './routes/_authenticated/painel'
 import { Route as AuthenticatedObrasRouteImport } from './routes/_authenticated/obras'
+import { Route as AuthenticatedCreditosRouteImport } from './routes/_authenticated/creditos'
 
 const VerificadorRoute = VerificadorRouteImport.update({
   id: '/verificador',
@@ -87,6 +88,11 @@ const AuthenticatedObrasRoute = AuthenticatedObrasRouteImport.update({
   path: '/obras',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedCreditosRoute = AuthenticatedCreditosRouteImport.update({
+  id: '/creditos',
+  path: '/creditos',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -96,6 +102,7 @@ export interface FileRoutesByFullPath {
   '/fabrica': typeof FabricaRoute
   '/ranking': typeof RankingRoute
   '/verificador': typeof VerificadorRoute
+  '/creditos': typeof AuthenticatedCreditosRoute
   '/obras': typeof AuthenticatedObrasRoute
   '/painel': typeof AuthenticatedPainelRoute
   '/perfil': typeof AuthenticatedPerfilRoute
@@ -110,6 +117,7 @@ export interface FileRoutesByTo {
   '/fabrica': typeof FabricaRoute
   '/ranking': typeof RankingRoute
   '/verificador': typeof VerificadorRoute
+  '/creditos': typeof AuthenticatedCreditosRoute
   '/obras': typeof AuthenticatedObrasRoute
   '/painel': typeof AuthenticatedPainelRoute
   '/perfil': typeof AuthenticatedPerfilRoute
@@ -126,6 +134,7 @@ export interface FileRoutesById {
   '/fabrica': typeof FabricaRoute
   '/ranking': typeof RankingRoute
   '/verificador': typeof VerificadorRoute
+  '/_authenticated/creditos': typeof AuthenticatedCreditosRoute
   '/_authenticated/obras': typeof AuthenticatedObrasRoute
   '/_authenticated/painel': typeof AuthenticatedPainelRoute
   '/_authenticated/perfil': typeof AuthenticatedPerfilRoute
@@ -142,6 +151,7 @@ export interface FileRouteTypes {
     | '/fabrica'
     | '/ranking'
     | '/verificador'
+    | '/creditos'
     | '/obras'
     | '/painel'
     | '/perfil'
@@ -156,6 +166,7 @@ export interface FileRouteTypes {
     | '/fabrica'
     | '/ranking'
     | '/verificador'
+    | '/creditos'
     | '/obras'
     | '/painel'
     | '/perfil'
@@ -171,6 +182,7 @@ export interface FileRouteTypes {
     | '/fabrica'
     | '/ranking'
     | '/verificador'
+    | '/_authenticated/creditos'
     | '/_authenticated/obras'
     | '/_authenticated/painel'
     | '/_authenticated/perfil'
@@ -282,10 +294,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedObrasRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/creditos': {
+      id: '/_authenticated/creditos'
+      path: '/creditos'
+      fullPath: '/creditos'
+      preLoaderRoute: typeof AuthenticatedCreditosRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedCreditosRoute: typeof AuthenticatedCreditosRoute
   AuthenticatedObrasRoute: typeof AuthenticatedObrasRoute
   AuthenticatedPainelRoute: typeof AuthenticatedPainelRoute
   AuthenticatedPerfilRoute: typeof AuthenticatedPerfilRoute
@@ -294,6 +314,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedCreditosRoute: AuthenticatedCreditosRoute,
   AuthenticatedObrasRoute: AuthenticatedObrasRoute,
   AuthenticatedPainelRoute: AuthenticatedPainelRoute,
   AuthenticatedPerfilRoute: AuthenticatedPerfilRoute,
