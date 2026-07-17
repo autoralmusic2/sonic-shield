@@ -17,9 +17,15 @@ import { Route as CadastroRouteImport } from './routes/cadastro'
 import { Route as BuscaRouteImport } from './routes/busca'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PortfolioSlugRouteImport } from './routes/portfolio.$slug'
+import { Route as AuthenticatedSegurancaRouteImport } from './routes/_authenticated/seguranca'
 import { Route as AuthenticatedRegistrarRouteImport } from './routes/_authenticated/registrar'
+import { Route as AuthenticatedPortfolioRouteImport } from './routes/_authenticated/portfolio'
+import { Route as AuthenticatedPerfilRouteImport } from './routes/_authenticated/perfil'
 import { Route as AuthenticatedPainelRouteImport } from './routes/_authenticated/painel'
 import { Route as AuthenticatedObrasRouteImport } from './routes/_authenticated/obras'
+import { Route as AuthenticatedCreditosRouteImport } from './routes/_authenticated/creditos'
+import { Route as AuthenticatedContratosRouteImport } from './routes/_authenticated/contratos'
 
 const VerificadorRoute = VerificadorRouteImport.update({
   id: '/verificador',
@@ -60,9 +66,29 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PortfolioSlugRoute = PortfolioSlugRouteImport.update({
+  id: '/portfolio/$slug',
+  path: '/portfolio/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedSegurancaRoute = AuthenticatedSegurancaRouteImport.update({
+  id: '/seguranca',
+  path: '/seguranca',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedRegistrarRoute = AuthenticatedRegistrarRouteImport.update({
   id: '/registrar',
   path: '/registrar',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedPortfolioRoute = AuthenticatedPortfolioRouteImport.update({
+  id: '/portfolio',
+  path: '/portfolio',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedPerfilRoute = AuthenticatedPerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedPainelRoute = AuthenticatedPainelRouteImport.update({
@@ -75,6 +101,16 @@ const AuthenticatedObrasRoute = AuthenticatedObrasRouteImport.update({
   path: '/obras',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedCreditosRoute = AuthenticatedCreditosRouteImport.update({
+  id: '/creditos',
+  path: '/creditos',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedContratosRoute = AuthenticatedContratosRouteImport.update({
+  id: '/contratos',
+  path: '/contratos',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -84,9 +120,15 @@ export interface FileRoutesByFullPath {
   '/fabrica': typeof FabricaRoute
   '/ranking': typeof RankingRoute
   '/verificador': typeof VerificadorRoute
+  '/contratos': typeof AuthenticatedContratosRoute
+  '/creditos': typeof AuthenticatedCreditosRoute
   '/obras': typeof AuthenticatedObrasRoute
   '/painel': typeof AuthenticatedPainelRoute
+  '/perfil': typeof AuthenticatedPerfilRoute
+  '/portfolio': typeof AuthenticatedPortfolioRoute
   '/registrar': typeof AuthenticatedRegistrarRoute
+  '/seguranca': typeof AuthenticatedSegurancaRoute
+  '/portfolio/$slug': typeof PortfolioSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -96,9 +138,15 @@ export interface FileRoutesByTo {
   '/fabrica': typeof FabricaRoute
   '/ranking': typeof RankingRoute
   '/verificador': typeof VerificadorRoute
+  '/contratos': typeof AuthenticatedContratosRoute
+  '/creditos': typeof AuthenticatedCreditosRoute
   '/obras': typeof AuthenticatedObrasRoute
   '/painel': typeof AuthenticatedPainelRoute
+  '/perfil': typeof AuthenticatedPerfilRoute
+  '/portfolio': typeof AuthenticatedPortfolioRoute
   '/registrar': typeof AuthenticatedRegistrarRoute
+  '/seguranca': typeof AuthenticatedSegurancaRoute
+  '/portfolio/$slug': typeof PortfolioSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -110,9 +158,15 @@ export interface FileRoutesById {
   '/fabrica': typeof FabricaRoute
   '/ranking': typeof RankingRoute
   '/verificador': typeof VerificadorRoute
+  '/_authenticated/contratos': typeof AuthenticatedContratosRoute
+  '/_authenticated/creditos': typeof AuthenticatedCreditosRoute
   '/_authenticated/obras': typeof AuthenticatedObrasRoute
   '/_authenticated/painel': typeof AuthenticatedPainelRoute
+  '/_authenticated/perfil': typeof AuthenticatedPerfilRoute
+  '/_authenticated/portfolio': typeof AuthenticatedPortfolioRoute
   '/_authenticated/registrar': typeof AuthenticatedRegistrarRoute
+  '/_authenticated/seguranca': typeof AuthenticatedSegurancaRoute
+  '/portfolio/$slug': typeof PortfolioSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -124,9 +178,15 @@ export interface FileRouteTypes {
     | '/fabrica'
     | '/ranking'
     | '/verificador'
+    | '/contratos'
+    | '/creditos'
     | '/obras'
     | '/painel'
+    | '/perfil'
+    | '/portfolio'
     | '/registrar'
+    | '/seguranca'
+    | '/portfolio/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -136,9 +196,15 @@ export interface FileRouteTypes {
     | '/fabrica'
     | '/ranking'
     | '/verificador'
+    | '/contratos'
+    | '/creditos'
     | '/obras'
     | '/painel'
+    | '/perfil'
+    | '/portfolio'
     | '/registrar'
+    | '/seguranca'
+    | '/portfolio/$slug'
   id:
     | '__root__'
     | '/'
@@ -149,9 +215,15 @@ export interface FileRouteTypes {
     | '/fabrica'
     | '/ranking'
     | '/verificador'
+    | '/_authenticated/contratos'
+    | '/_authenticated/creditos'
     | '/_authenticated/obras'
     | '/_authenticated/painel'
+    | '/_authenticated/perfil'
+    | '/_authenticated/portfolio'
     | '/_authenticated/registrar'
+    | '/_authenticated/seguranca'
+    | '/portfolio/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -163,6 +235,7 @@ export interface RootRouteChildren {
   FabricaRoute: typeof FabricaRoute
   RankingRoute: typeof RankingRoute
   VerificadorRoute: typeof VerificadorRoute
+  PortfolioSlugRoute: typeof PortfolioSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -223,11 +296,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/portfolio/$slug': {
+      id: '/portfolio/$slug'
+      path: '/portfolio/$slug'
+      fullPath: '/portfolio/$slug'
+      preLoaderRoute: typeof PortfolioSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/seguranca': {
+      id: '/_authenticated/seguranca'
+      path: '/seguranca'
+      fullPath: '/seguranca'
+      preLoaderRoute: typeof AuthenticatedSegurancaRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/registrar': {
       id: '/_authenticated/registrar'
       path: '/registrar'
       fullPath: '/registrar'
       preLoaderRoute: typeof AuthenticatedRegistrarRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/portfolio': {
+      id: '/_authenticated/portfolio'
+      path: '/portfolio'
+      fullPath: '/portfolio'
+      preLoaderRoute: typeof AuthenticatedPortfolioRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/perfil': {
+      id: '/_authenticated/perfil'
+      path: '/perfil'
+      fullPath: '/perfil'
+      preLoaderRoute: typeof AuthenticatedPerfilRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/painel': {
@@ -244,19 +345,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedObrasRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/creditos': {
+      id: '/_authenticated/creditos'
+      path: '/creditos'
+      fullPath: '/creditos'
+      preLoaderRoute: typeof AuthenticatedCreditosRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/contratos': {
+      id: '/_authenticated/contratos'
+      path: '/contratos'
+      fullPath: '/contratos'
+      preLoaderRoute: typeof AuthenticatedContratosRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedContratosRoute: typeof AuthenticatedContratosRoute
+  AuthenticatedCreditosRoute: typeof AuthenticatedCreditosRoute
   AuthenticatedObrasRoute: typeof AuthenticatedObrasRoute
   AuthenticatedPainelRoute: typeof AuthenticatedPainelRoute
+  AuthenticatedPerfilRoute: typeof AuthenticatedPerfilRoute
+  AuthenticatedPortfolioRoute: typeof AuthenticatedPortfolioRoute
   AuthenticatedRegistrarRoute: typeof AuthenticatedRegistrarRoute
+  AuthenticatedSegurancaRoute: typeof AuthenticatedSegurancaRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedContratosRoute: AuthenticatedContratosRoute,
+  AuthenticatedCreditosRoute: AuthenticatedCreditosRoute,
   AuthenticatedObrasRoute: AuthenticatedObrasRoute,
   AuthenticatedPainelRoute: AuthenticatedPainelRoute,
+  AuthenticatedPerfilRoute: AuthenticatedPerfilRoute,
+  AuthenticatedPortfolioRoute: AuthenticatedPortfolioRoute,
   AuthenticatedRegistrarRoute: AuthenticatedRegistrarRoute,
+  AuthenticatedSegurancaRoute: AuthenticatedSegurancaRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
@@ -271,6 +396,7 @@ const rootRouteChildren: RootRouteChildren = {
   FabricaRoute: FabricaRoute,
   RankingRoute: RankingRoute,
   VerificadorRoute: VerificadorRoute,
+  PortfolioSlugRoute: PortfolioSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
