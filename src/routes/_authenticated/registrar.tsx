@@ -235,7 +235,7 @@ function Registrar() {
       }
 
       const code = generateVerificationCode();
-      const { data: obra, error } = await supabase.from("obras").insert({
+      const insertPayload: any = {
         user_id: user.id,
         verification_code: code,
         titulo: f.titulo.trim(),
@@ -255,18 +255,20 @@ function Registrar() {
         endereco: f.endereco,
         arquivo_path, arquivo_nome, arquivo_mime, arquivo_tamanho,
         aceite_legal: true,
-      }).select("id").single();
+      };
+      const { data: obra, error } = await supabase.from("obras").insert(insertPayload).select("id").single();
       if (error) throw error;
 
       // sincroniza perfil (best-effort)
-      await supabase.from("profiles").update({
+      const profileUpd: any = {
         nome_completo: f.qualificacao.nome_completo,
         nome_artistico: f.qualificacao.nome_artistico || null,
         documento: f.qualificacao.cpf,
         telefone: f.qualificacao.telefone,
         email: f.qualificacao.email,
         ...f.endereco,
-      }).eq("id", user.id);
+      };
+      await supabase.from("profiles").update(profileUpd).eq("id", user.id);
 
       setResult({ code, obraId: obra.id, audioUrl });
       setStep(5);
