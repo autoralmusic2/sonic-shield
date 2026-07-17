@@ -1,6 +1,10 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { LogIn } from "lucide-react";
+import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { lovable } from "@/integrations/lovable";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/entrar")({
   head: () => ({
@@ -15,6 +19,47 @@ export const Route = createFileRoute("/entrar")({
 });
 
 function Entrar() {
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || !senha) {
+      toast.error("Preencha e-mail e senha");
+      return;
+    }
+    setLoading(true);
+    const { error } = await supabase.auth.signInWithPassword({ email, password: senha });
+    setLoading(false);
+    if (error) {
+      toast.error(error.message === "Invalid login credentials" ? "E-mail ou senha inválidos" : error.message);
+      return;
+    }
+    toast.success("Bem-vindo(a) de volta!");
+    router.navigate({ to: "/painel" });
+  };
+
+  const google = async () => {
+    const res = await lovable.auth.signInWithOAuth("google", {
+      redirect_uri: window.location.origin,
+    });
+    if (res.error) toast.error("Falha no login com Google");
+  };
+
+  const forgot = async () => {
+    if (!email) {
+      toast.error("Informe seu e-mail primeiro");
+      return;
+    }
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/redefinir-senha`,
+    });
+    if (error) toast.error(error.message);
+    else toast.success("Enviamos um link de recuperação para o seu e-mail");
+  };
+
   return (
     <SiteLayout>
       <section className="mx-auto max-w-md px-4 py-16">
@@ -27,28 +72,44 @@ function Entrar() {
             <p className="mt-1 text-sm text-muted-foreground">Acesso para autores já cadastrados</p>
           </div>
 
-          <form className="space-y-4">
+          <button type="button" onClick={google} className="btn-ghost-neon w-full !py-2.5 mb-4 text-sm">
+            Entrar com Google
+          </button>
+          <div className="mb-4 flex items-center gap-3 text-[10px] uppercase tracking-widest text-muted-foreground">
+            <span className="h-px flex-1 bg-border" /> ou com e-mail <span className="h-px flex-1 bg-border" />
+          </div>
+
+          <form className="space-y-4" onSubmit={submit}>
             <label className="block">
               <span className="mb-1.5 block text-xs font-medium uppercase tracking-widest text-muted-foreground">E-mail de Acesso</span>
-              <input type="email" placeholder="voce@email.com"
-                className="w-full rounded-lg border border-border bg-input/60 px-4 py-2.5 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40" />
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="voce@email.com"
+                className="w-full rounded-lg border border-border bg-input/60 px-4 py-2.5 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
+              />
             </label>
             <label className="block">
               <span className="mb-1.5 block text-xs font-medium uppercase tracking-widest text-muted-foreground">Senha</span>
-              <input type="password" placeholder="••••••••"
-                className="w-full rounded-lg border border-border bg-input/60 px-4 py-2.5 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40" />
+              <input
+                type="password"
+                value={senha}
+                onChange={(e) => setSenha(e.target.value)}
+                placeholder="••••••••"
+                className="w-full rounded-lg border border-border bg-input/60 px-4 py-2.5 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
+              />
             </label>
             <div className="text-right">
-              <a href="#" className="text-xs text-primary hover:underline">Esqueceu a senha?</a>
+              <button type="button" onClick={forgot} className="text-xs text-primary hover:underline">Esqueceu a senha?</button>
             </div>
-            <button type="button" className="btn-neon w-full">Entrar</button>
+            <button type="submit" disabled={loading} className="btn-neon w-full disabled:opacity-60">
+              {loading ? "Entrando..." : "Entrar"}
+            </button>
             <p className="text-center text-xs text-muted-foreground">
-              Não tem uma conta? <Link to="/cadastro" className="text-accent hover:underline">Cadastre-se grátis</Link>
+              Não tem conta? <Link to="/cadastro" className="text-accent hover:underline">Cadastre-se grátis</Link>
             </p>
           </form>
-          <p className="mt-4 text-center text-[11px] text-muted-foreground">
-            Login completo será ativado na Fase 2 com Lovable Cloud.
-          </p>
         </div>
       </section>
     </SiteLayout>

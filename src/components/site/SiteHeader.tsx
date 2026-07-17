@@ -1,7 +1,12 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Menu, X, LogIn, UserPlus } from "lucide-react";
+import { Menu, X, LogIn, UserPlus, LayoutDashboard, LogOut } from "lucide-react";
 import logo from "@/assets/logo.png";
+import { useSession } from "@/hooks/use-session";
+import { supabase } from "@/integrations/supabase/client";
+import { useRouter } from "@tanstack/react-router";
+import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 const NAV = [
   { to: "/", label: "Início" },
@@ -13,6 +18,18 @@ const NAV = [
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const { user } = useSession();
+  const router = useRouter();
+  const queryClient = useQueryClient();
+
+  const handleSignOut = async () => {
+    await queryClient.cancelQueries();
+    queryClient.clear();
+    await supabase.auth.signOut();
+    toast.success("Sessão encerrada");
+    router.navigate({ to: "/", replace: true });
+  };
+
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 backdrop-blur-xl bg-background/70">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
@@ -40,12 +57,25 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden items-center gap-2 lg:flex">
-          <Link to="/entrar" className="btn-ghost-neon !py-2 !px-4 text-sm">
-            <LogIn className="h-4 w-4" /> Entrar
-          </Link>
-          <Link to="/cadastro" className="btn-neon !py-2 !px-4 text-sm">
-            <UserPlus className="h-4 w-4" /> Criar Conta
-          </Link>
+          {user ? (
+            <>
+              <Link to="/painel" className="btn-ghost-neon !py-2 !px-4 text-sm">
+                <LayoutDashboard className="h-4 w-4" /> Painel
+              </Link>
+              <button onClick={handleSignOut} className="btn-neon !py-2 !px-4 text-sm">
+                <LogOut className="h-4 w-4" /> Sair
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="/entrar" className="btn-ghost-neon !py-2 !px-4 text-sm">
+                <LogIn className="h-4 w-4" /> Entrar
+              </Link>
+              <Link to="/cadastro" className="btn-neon !py-2 !px-4 text-sm">
+                <UserPlus className="h-4 w-4" /> Criar Conta
+              </Link>
+            </>
+          )}
         </div>
 
         <button
@@ -71,8 +101,17 @@ export function SiteHeader() {
               </Link>
             ))}
             <div className="mt-2 flex gap-2">
-              <Link to="/entrar" onClick={() => setOpen(false)} className="btn-ghost-neon flex-1 !py-2 text-sm">Entrar</Link>
-              <Link to="/cadastro" onClick={() => setOpen(false)} className="btn-neon flex-1 !py-2 text-sm">Criar Conta</Link>
+              {user ? (
+                <>
+                  <Link to="/painel" onClick={() => setOpen(false)} className="btn-ghost-neon flex-1 !py-2 text-sm">Painel</Link>
+                  <button onClick={() => { setOpen(false); handleSignOut(); }} className="btn-neon flex-1 !py-2 text-sm">Sair</button>
+                </>
+              ) : (
+                <>
+                  <Link to="/entrar" onClick={() => setOpen(false)} className="btn-ghost-neon flex-1 !py-2 text-sm">Entrar</Link>
+                  <Link to="/cadastro" onClick={() => setOpen(false)} className="btn-neon flex-1 !py-2 text-sm">Criar Conta</Link>
+                </>
+              )}
             </div>
           </nav>
         </div>
