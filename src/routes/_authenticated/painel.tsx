@@ -37,8 +37,8 @@ function Painel() {
   }, [user]);
 
   const items = [
-    { icon: Music4, title: "Registrar Música", desc: "Blinde sua obra em 5 passos com hash SHA-256", to: "/painel/registrar" },
-    { icon: Radio, title: "Minhas Obras", desc: "Certificados PDF e histórico de registros", to: "/painel/obras" },
+    { icon: Music4, title: "Registrar Música", desc: "Blinde sua obra em 5 passos com hash SHA-256", to: "/registrar" },
+    { icon: Radio, title: "Minhas Obras", desc: "Certificados PDF e histórico de registros", to: "/obras" },
     { icon: User, title: "Meu Perfil", desc: "Dados cadastrais, foto e bio", to: "/painel" },
     { icon: Search, title: "Meu Portfólio", desc: "Página pública para gravadoras", to: "/painel" },
     { icon: Coins, title: "Créditos & Planos", desc: "Comprar tokens e ver histórico", to: "/painel" },
