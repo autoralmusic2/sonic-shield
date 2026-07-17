@@ -39,11 +39,11 @@ function Painel() {
   const items = [
     { icon: Music4, title: "Registrar Música", desc: "Blinde sua obra em 5 passos com hash SHA-256", to: "/registrar" },
     { icon: Radio, title: "Minhas Obras", desc: "Certificados PDF e histórico de registros", to: "/obras" },
-    { icon: User, title: "Meu Perfil", desc: "Dados cadastrais, foto e bio", to: "/painel" },
-    { icon: Search, title: "Meu Portfólio", desc: "Página pública para gravadoras", to: "/painel" },
-    { icon: Coins, title: "Créditos & Planos", desc: "Comprar tokens e ver histórico", to: "/painel" },
-    { icon: FileSignature, title: "Contratos", desc: "Cessão de direitos e split sheet", to: "/painel" },
-    { icon: ShieldCheck, title: "Segurança", desc: "Trocar senha e sessões ativas", to: "/painel" },
+    { icon: User, title: "Meu Perfil", desc: "Dados cadastrais, foto e bio", to: "/perfil" },
+    { icon: Search, title: "Meu Portfólio", desc: "Página pública para gravadoras", to: "/portfolio" },
+    { icon: Coins, title: "Créditos & Planos", desc: "Comprar tokens e ver histórico", to: "/creditos" },
+    { icon: FileSignature, title: "Contratos", desc: "Cessão de direitos e split sheet", to: "/contratos" },
+    { icon: ShieldCheck, title: "Segurança", desc: "Trocar senha e sessões ativas", to: "/seguranca" },
   ];
 
   return (
