@@ -227,6 +227,10 @@ export type Database = {
         Args: { _motivo: string; _user: string }
         Returns: number
       }
+      redeem_token_credits: {
+        Args: { _qty: number; _token: string; _user: string }
+        Returns: number
+      }
     }
     Enums: {
       [_ in never]: never
