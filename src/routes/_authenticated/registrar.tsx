@@ -596,8 +596,7 @@ function Registrar() {
               )}
             </div>
           )}
-        </div>
-      </section>
+          </div>
         </>
         )}
         {balance === null && (
