@@ -14,6 +14,7 @@ import {
   type CoAutor,
 } from "@/lib/obra-utils";
 import { generateCertificatePDF } from "@/lib/obra-certificate";
+import { CreditosCheckout } from "@/components/site/CreditosCheckout";
 import {
   Check,
   ChevronLeft,
@@ -92,8 +93,16 @@ function Registrar() {
   const [hashing, setHashing] = useState(false);
   const [hashes, setHashes] = useState<{ sha256: string; sha512: string; fileSha256?: string; fileSha512?: string } | null>(null);
   const [result, setResult] = useState<{ code: string; obraId: string; audioUrl: string | null } | null>(null);
+  const [balance, setBalance] = useState<number | null>(null);
   const audioUrl = useMemo(() => (f.file ? URL.createObjectURL(f.file) : null), [f.file]);
   useEffect(() => () => { if (audioUrl) URL.revokeObjectURL(audioUrl); }, [audioUrl]);
+
+  async function loadBalance() {
+    if (!user) return;
+    const { data } = await supabase.from("credits").select("balance").eq("user_id", user.id).maybeSingle();
+    setBalance((data?.balance as number) ?? 0);
+  }
+  useEffect(() => { loadBalance(); }, [user]);
 
   const upd = <K extends keyof FormState>(k: K, v: FormState[K]) => setF((s) => ({ ...s, [k]: v }));
   const updQ = (k: keyof Qualificacao, v: string) => setF((s) => ({ ...s, qualificacao: { ...s.qualificacao, [k]: v } }));
@@ -316,6 +325,22 @@ function Registrar() {
           </h1>
         </div>
 
+        {balance !== null && balance <= 0 && !result && (
+          <div className="space-y-6">
+            <div className="glow-border rounded-2xl border-primary/40 bg-primary/5 p-6">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-primary">Checkout necessário</p>
+              <h2 className="mt-1 font-display text-xl font-semibold">Você não possui créditos ativos</h2>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Para gerar o certificado da sua obra, adquira créditos abaixo. O registro é liberado automaticamente
+                assim que você ativar o token.
+              </p>
+            </div>
+            <CreditosCheckout balance={balance} onCredited={(b) => setBalance(b)} compact />
+          </div>
+        )}
+
+        {balance !== null && balance > 0 && (
+        <>
         <ol className="mb-8 flex flex-wrap items-center gap-3">
           {steps.map((s) => {
             const active = s.n === step;
@@ -572,6 +597,14 @@ function Registrar() {
             </div>
           )}
         </div>
+      </section>
+        </>
+        )}
+        {balance === null && (
+          <div className="glow-border rounded-2xl p-8 text-center text-sm text-muted-foreground">
+            Carregando seu saldo…
+          </div>
+        )}
       </section>
     </SiteLayout>
   );
