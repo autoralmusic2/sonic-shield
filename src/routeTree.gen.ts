@@ -10,11 +10,8 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VerificadorRouteImport } from './routes/verificador'
-import { Route as RankingRouteImport } from './routes/ranking'
-import { Route as FabricaRouteImport } from './routes/fabrica'
 import { Route as EntrarRouteImport } from './routes/entrar'
 import { Route as CadastroRouteImport } from './routes/cadastro'
-import { Route as BuscaRouteImport } from './routes/busca'
 import { Route as AutoralAdminGateRouteImport } from './routes/autoral-admin-gate'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
@@ -33,16 +30,6 @@ const VerificadorRoute = VerificadorRouteImport.update({
   path: '/verificador',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RankingRoute = RankingRouteImport.update({
-  id: '/ranking',
-  path: '/ranking',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FabricaRoute = FabricaRouteImport.update({
-  id: '/fabrica',
-  path: '/fabrica',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const EntrarRoute = EntrarRouteImport.update({
   id: '/entrar',
   path: '/entrar',
@@ -51,11 +38,6 @@ const EntrarRoute = EntrarRouteImport.update({
 const CadastroRoute = CadastroRouteImport.update({
   id: '/cadastro',
   path: '/cadastro',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BuscaRoute = BuscaRouteImport.update({
-  id: '/busca',
-  path: '/busca',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AutoralAdminGateRoute = AutoralAdminGateRouteImport.update({
@@ -121,11 +103,8 @@ const AuthenticatedContratosRoute = AuthenticatedContratosRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/autoral-admin-gate': typeof AutoralAdminGateRoute
-  '/busca': typeof BuscaRoute
   '/cadastro': typeof CadastroRoute
   '/entrar': typeof EntrarRoute
-  '/fabrica': typeof FabricaRoute
-  '/ranking': typeof RankingRoute
   '/verificador': typeof VerificadorRoute
   '/contratos': typeof AuthenticatedContratosRoute
   '/creditos': typeof AuthenticatedCreditosRoute
@@ -140,11 +119,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/autoral-admin-gate': typeof AutoralAdminGateRoute
-  '/busca': typeof BuscaRoute
   '/cadastro': typeof CadastroRoute
   '/entrar': typeof EntrarRoute
-  '/fabrica': typeof FabricaRoute
-  '/ranking': typeof RankingRoute
   '/verificador': typeof VerificadorRoute
   '/contratos': typeof AuthenticatedContratosRoute
   '/creditos': typeof AuthenticatedCreditosRoute
@@ -161,11 +137,8 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/autoral-admin-gate': typeof AutoralAdminGateRoute
-  '/busca': typeof BuscaRoute
   '/cadastro': typeof CadastroRoute
   '/entrar': typeof EntrarRoute
-  '/fabrica': typeof FabricaRoute
-  '/ranking': typeof RankingRoute
   '/verificador': typeof VerificadorRoute
   '/_authenticated/contratos': typeof AuthenticatedContratosRoute
   '/_authenticated/creditos': typeof AuthenticatedCreditosRoute
@@ -182,11 +155,8 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/autoral-admin-gate'
-    | '/busca'
     | '/cadastro'
     | '/entrar'
-    | '/fabrica'
-    | '/ranking'
     | '/verificador'
     | '/contratos'
     | '/creditos'
@@ -201,11 +171,8 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/autoral-admin-gate'
-    | '/busca'
     | '/cadastro'
     | '/entrar'
-    | '/fabrica'
-    | '/ranking'
     | '/verificador'
     | '/contratos'
     | '/creditos'
@@ -221,11 +188,8 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/autoral-admin-gate'
-    | '/busca'
     | '/cadastro'
     | '/entrar'
-    | '/fabrica'
-    | '/ranking'
     | '/verificador'
     | '/_authenticated/contratos'
     | '/_authenticated/creditos'
@@ -242,11 +206,8 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AutoralAdminGateRoute: typeof AutoralAdminGateRoute
-  BuscaRoute: typeof BuscaRoute
   CadastroRoute: typeof CadastroRoute
   EntrarRoute: typeof EntrarRoute
-  FabricaRoute: typeof FabricaRoute
-  RankingRoute: typeof RankingRoute
   VerificadorRoute: typeof VerificadorRoute
   PortfolioSlugRoute: typeof PortfolioSlugRoute
 }
@@ -258,20 +219,6 @@ declare module '@tanstack/react-router' {
       path: '/verificador'
       fullPath: '/verificador'
       preLoaderRoute: typeof VerificadorRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/ranking': {
-      id: '/ranking'
-      path: '/ranking'
-      fullPath: '/ranking'
-      preLoaderRoute: typeof RankingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/fabrica': {
-      id: '/fabrica'
-      path: '/fabrica'
-      fullPath: '/fabrica'
-      preLoaderRoute: typeof FabricaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/entrar': {
@@ -286,13 +233,6 @@ declare module '@tanstack/react-router' {
       path: '/cadastro'
       fullPath: '/cadastro'
       preLoaderRoute: typeof CadastroRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/busca': {
-      id: '/busca'
-      path: '/busca'
-      fullPath: '/busca'
-      preLoaderRoute: typeof BuscaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/autoral-admin-gate': {
@@ -411,24 +351,11 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AutoralAdminGateRoute: AutoralAdminGateRoute,
-  BuscaRoute: BuscaRoute,
   CadastroRoute: CadastroRoute,
   EntrarRoute: EntrarRoute,
-  FabricaRoute: FabricaRoute,
-  RankingRoute: RankingRoute,
   VerificadorRoute: VerificadorRoute,
   PortfolioSlugRoute: PortfolioSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
