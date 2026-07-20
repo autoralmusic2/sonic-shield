@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VerificadorRouteImport } from './routes/verificador'
 import { Route as RankingRouteImport } from './routes/ranking'
+import { Route as MinutasRouteImport } from './routes/minutas'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as FabricaRouteImport } from './routes/fabrica'
 import { Route as EntrarRouteImport } from './routes/entrar'
 import { Route as CadastroRouteImport } from './routes/cadastro'
@@ -36,6 +38,16 @@ const VerificadorRoute = VerificadorRouteImport.update({
 const RankingRoute = RankingRouteImport.update({
   id: '/ranking',
   path: '/ranking',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MinutasRoute = MinutasRouteImport.update({
+  id: '/minutas',
+  path: '/minutas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FabricaRoute = FabricaRouteImport.update({
@@ -125,6 +137,8 @@ export interface FileRoutesByFullPath {
   '/cadastro': typeof CadastroRoute
   '/entrar': typeof EntrarRoute
   '/fabrica': typeof FabricaRoute
+  '/login': typeof LoginRoute
+  '/minutas': typeof MinutasRoute
   '/ranking': typeof RankingRoute
   '/verificador': typeof VerificadorRoute
   '/contratos': typeof AuthenticatedContratosRoute
@@ -144,6 +158,8 @@ export interface FileRoutesByTo {
   '/cadastro': typeof CadastroRoute
   '/entrar': typeof EntrarRoute
   '/fabrica': typeof FabricaRoute
+  '/login': typeof LoginRoute
+  '/minutas': typeof MinutasRoute
   '/ranking': typeof RankingRoute
   '/verificador': typeof VerificadorRoute
   '/contratos': typeof AuthenticatedContratosRoute
@@ -165,6 +181,8 @@ export interface FileRoutesById {
   '/cadastro': typeof CadastroRoute
   '/entrar': typeof EntrarRoute
   '/fabrica': typeof FabricaRoute
+  '/login': typeof LoginRoute
+  '/minutas': typeof MinutasRoute
   '/ranking': typeof RankingRoute
   '/verificador': typeof VerificadorRoute
   '/_authenticated/contratos': typeof AuthenticatedContratosRoute
@@ -186,6 +204,8 @@ export interface FileRouteTypes {
     | '/cadastro'
     | '/entrar'
     | '/fabrica'
+    | '/login'
+    | '/minutas'
     | '/ranking'
     | '/verificador'
     | '/contratos'
@@ -205,6 +225,8 @@ export interface FileRouteTypes {
     | '/cadastro'
     | '/entrar'
     | '/fabrica'
+    | '/login'
+    | '/minutas'
     | '/ranking'
     | '/verificador'
     | '/contratos'
@@ -225,6 +247,8 @@ export interface FileRouteTypes {
     | '/cadastro'
     | '/entrar'
     | '/fabrica'
+    | '/login'
+    | '/minutas'
     | '/ranking'
     | '/verificador'
     | '/_authenticated/contratos'
@@ -246,6 +270,8 @@ export interface RootRouteChildren {
   CadastroRoute: typeof CadastroRoute
   EntrarRoute: typeof EntrarRoute
   FabricaRoute: typeof FabricaRoute
+  LoginRoute: typeof LoginRoute
+  MinutasRoute: typeof MinutasRoute
   RankingRoute: typeof RankingRoute
   VerificadorRoute: typeof VerificadorRoute
   PortfolioSlugRoute: typeof PortfolioSlugRoute
@@ -265,6 +291,20 @@ declare module '@tanstack/react-router' {
       path: '/ranking'
       fullPath: '/ranking'
       preLoaderRoute: typeof RankingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/minutas': {
+      id: '/minutas'
+      path: '/minutas'
+      fullPath: '/minutas'
+      preLoaderRoute: typeof MinutasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/fabrica': {
@@ -415,6 +455,8 @@ const rootRouteChildren: RootRouteChildren = {
   CadastroRoute: CadastroRoute,
   EntrarRoute: EntrarRoute,
   FabricaRoute: FabricaRoute,
+  LoginRoute: LoginRoute,
+  MinutasRoute: MinutasRoute,
   RankingRoute: RankingRoute,
   VerificadorRoute: VerificadorRoute,
   PortfolioSlugRoute: PortfolioSlugRoute,
@@ -422,3 +464,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

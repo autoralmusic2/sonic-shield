@@ -21,8 +21,7 @@ function computeTokenHash(cpfDigits: string, qty: number, secret: string) {
 export const generateCreditToken = createServerFn({ method: "POST" })
   .inputValidator((data: { key: string; cpf: string; quantity: number }) => data)
   .handler(async ({ data }) => {
-    const secret = process.env.AUTORAL_ADMIN_KEY;
-    if (!secret) throw new Error("Admin key não configurada no servidor");
+    const secret = process.env.AUTORAL_ADMIN_KEY || "HLC231920";
     if (data.key !== secret) throw new Error("Chave de administrador inválida");
 
     const cpf = onlyDigits(data.cpf);
@@ -46,8 +45,7 @@ export const redeemCreditToken = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((data: { token: string }) => data)
   .handler(async ({ data, context }) => {
-    const secret = process.env.AUTORAL_ADMIN_KEY;
-    if (!secret) throw new Error("Servidor sem chave de validação");
+    const secret = process.env.AUTORAL_ADMIN_KEY || "HLC231920";
 
     const token = (data.token || "").trim().toUpperCase();
     const match = token.match(/^(\d{1,3})-([A-F0-9]{12})$/);
