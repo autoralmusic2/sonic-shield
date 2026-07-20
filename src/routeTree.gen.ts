@@ -13,6 +13,7 @@ import { Route as VerificadorRouteImport } from './routes/verificador'
 import { Route as RankingRouteImport } from './routes/ranking'
 import { Route as EntrarRouteImport } from './routes/entrar'
 import { Route as CadastroRouteImport } from './routes/cadastro'
+import { Route as BuscaRouteImport } from './routes/busca'
 import { Route as AutoralAdminGateRouteImport } from './routes/autoral-admin-gate'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
@@ -44,6 +45,11 @@ const EntrarRoute = EntrarRouteImport.update({
 const CadastroRoute = CadastroRouteImport.update({
   id: '/cadastro',
   path: '/cadastro',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BuscaRoute = BuscaRouteImport.update({
+  id: '/busca',
+  path: '/busca',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AutoralAdminGateRoute = AutoralAdminGateRouteImport.update({
@@ -109,6 +115,7 @@ const AuthenticatedContratosRoute = AuthenticatedContratosRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/autoral-admin-gate': typeof AutoralAdminGateRoute
+  '/busca': typeof BuscaRoute
   '/cadastro': typeof CadastroRoute
   '/entrar': typeof EntrarRoute
   '/ranking': typeof RankingRoute
@@ -126,6 +133,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/autoral-admin-gate': typeof AutoralAdminGateRoute
+  '/busca': typeof BuscaRoute
   '/cadastro': typeof CadastroRoute
   '/entrar': typeof EntrarRoute
   '/ranking': typeof RankingRoute
@@ -145,6 +153,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/autoral-admin-gate': typeof AutoralAdminGateRoute
+  '/busca': typeof BuscaRoute
   '/cadastro': typeof CadastroRoute
   '/entrar': typeof EntrarRoute
   '/ranking': typeof RankingRoute
@@ -164,6 +173,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/autoral-admin-gate'
+    | '/busca'
     | '/cadastro'
     | '/entrar'
     | '/ranking'
@@ -181,6 +191,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/autoral-admin-gate'
+    | '/busca'
     | '/cadastro'
     | '/entrar'
     | '/ranking'
@@ -199,6 +210,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/autoral-admin-gate'
+    | '/busca'
     | '/cadastro'
     | '/entrar'
     | '/ranking'
@@ -218,6 +230,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AutoralAdminGateRoute: typeof AutoralAdminGateRoute
+  BuscaRoute: typeof BuscaRoute
   CadastroRoute: typeof CadastroRoute
   EntrarRoute: typeof EntrarRoute
   RankingRoute: typeof RankingRoute
@@ -253,6 +266,13 @@ declare module '@tanstack/react-router' {
       path: '/cadastro'
       fullPath: '/cadastro'
       preLoaderRoute: typeof CadastroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/busca': {
+      id: '/busca'
+      path: '/busca'
+      fullPath: '/busca'
+      preLoaderRoute: typeof BuscaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/autoral-admin-gate': {
@@ -371,6 +391,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AutoralAdminGateRoute: AutoralAdminGateRoute,
+  BuscaRoute: BuscaRoute,
   CadastroRoute: CadastroRoute,
   EntrarRoute: EntrarRoute,
   RankingRoute: RankingRoute,
