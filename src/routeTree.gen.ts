@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VerificadorRouteImport } from './routes/verificador'
+import { Route as RankingRouteImport } from './routes/ranking'
 import { Route as EntrarRouteImport } from './routes/entrar'
 import { Route as CadastroRouteImport } from './routes/cadastro'
 import { Route as AutoralAdminGateRouteImport } from './routes/autoral-admin-gate'
@@ -28,6 +29,11 @@ import { Route as AuthenticatedContratosRouteImport } from './routes/_authentica
 const VerificadorRoute = VerificadorRouteImport.update({
   id: '/verificador',
   path: '/verificador',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RankingRoute = RankingRouteImport.update({
+  id: '/ranking',
+  path: '/ranking',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EntrarRoute = EntrarRouteImport.update({
@@ -105,6 +111,7 @@ export interface FileRoutesByFullPath {
   '/autoral-admin-gate': typeof AutoralAdminGateRoute
   '/cadastro': typeof CadastroRoute
   '/entrar': typeof EntrarRoute
+  '/ranking': typeof RankingRoute
   '/verificador': typeof VerificadorRoute
   '/contratos': typeof AuthenticatedContratosRoute
   '/creditos': typeof AuthenticatedCreditosRoute
@@ -121,6 +128,7 @@ export interface FileRoutesByTo {
   '/autoral-admin-gate': typeof AutoralAdminGateRoute
   '/cadastro': typeof CadastroRoute
   '/entrar': typeof EntrarRoute
+  '/ranking': typeof RankingRoute
   '/verificador': typeof VerificadorRoute
   '/contratos': typeof AuthenticatedContratosRoute
   '/creditos': typeof AuthenticatedCreditosRoute
@@ -139,6 +147,7 @@ export interface FileRoutesById {
   '/autoral-admin-gate': typeof AutoralAdminGateRoute
   '/cadastro': typeof CadastroRoute
   '/entrar': typeof EntrarRoute
+  '/ranking': typeof RankingRoute
   '/verificador': typeof VerificadorRoute
   '/_authenticated/contratos': typeof AuthenticatedContratosRoute
   '/_authenticated/creditos': typeof AuthenticatedCreditosRoute
@@ -157,6 +166,7 @@ export interface FileRouteTypes {
     | '/autoral-admin-gate'
     | '/cadastro'
     | '/entrar'
+    | '/ranking'
     | '/verificador'
     | '/contratos'
     | '/creditos'
@@ -173,6 +183,7 @@ export interface FileRouteTypes {
     | '/autoral-admin-gate'
     | '/cadastro'
     | '/entrar'
+    | '/ranking'
     | '/verificador'
     | '/contratos'
     | '/creditos'
@@ -190,6 +201,7 @@ export interface FileRouteTypes {
     | '/autoral-admin-gate'
     | '/cadastro'
     | '/entrar'
+    | '/ranking'
     | '/verificador'
     | '/_authenticated/contratos'
     | '/_authenticated/creditos'
@@ -208,6 +220,7 @@ export interface RootRouteChildren {
   AutoralAdminGateRoute: typeof AutoralAdminGateRoute
   CadastroRoute: typeof CadastroRoute
   EntrarRoute: typeof EntrarRoute
+  RankingRoute: typeof RankingRoute
   VerificadorRoute: typeof VerificadorRoute
   PortfolioSlugRoute: typeof PortfolioSlugRoute
 }
@@ -219,6 +232,13 @@ declare module '@tanstack/react-router' {
       path: '/verificador'
       fullPath: '/verificador'
       preLoaderRoute: typeof VerificadorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ranking': {
+      id: '/ranking'
+      path: '/ranking'
+      fullPath: '/ranking'
+      preLoaderRoute: typeof RankingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/entrar': {
@@ -353,6 +373,7 @@ const rootRouteChildren: RootRouteChildren = {
   AutoralAdminGateRoute: AutoralAdminGateRoute,
   CadastroRoute: CadastroRoute,
   EntrarRoute: EntrarRoute,
+  RankingRoute: RankingRoute,
   VerificadorRoute: VerificadorRoute,
   PortfolioSlugRoute: PortfolioSlugRoute,
 }
