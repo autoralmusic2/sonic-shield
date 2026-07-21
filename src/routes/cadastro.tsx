@@ -4,7 +4,6 @@ import { UserPlus } from "lucide-react";
 import { useState } from "react";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
-import { lovable } from "@/integrations/lovable";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/cadastro")({
@@ -74,15 +73,13 @@ function Cadastro() {
       toast.error(error.message);
       return;
     }
-    toast.success("Cadastro criado! Confirme seu e-mail para acessar o painel.");
-    router.navigate({ to: "/entrar" });
-  };
-
-  const google = async () => {
-    const res = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin,
-    });
-    if (res.error) toast.error("Falha no login com Google");
+    toast.success("Cadastro criado! Entrando na sua conta...");
+    const { error: signInError } = await supabase.auth.signInWithPassword({ email, password: senha });
+    if (signInError) {
+      router.navigate({ to: "/entrar" });
+      return;
+    }
+    router.navigate({ to: "/painel" });
   };
 
   return (
@@ -95,13 +92,6 @@ function Cadastro() {
             </div>
             <h1 className="mt-4 font-display text-2xl font-bold">Criar Conta</h1>
             <p className="mt-1 text-sm text-muted-foreground">Ficha cadastral do autor · 1 crédito grátis</p>
-          </div>
-
-          <button type="button" onClick={google} className="btn-ghost-neon w-full !py-2.5 mb-4 text-sm">
-            Entrar com Google
-          </button>
-          <div className="mb-4 flex items-center gap-3 text-[10px] uppercase tracking-widest text-muted-foreground">
-            <span className="h-px flex-1 bg-border" /> ou com e-mail <span className="h-px flex-1 bg-border" />
           </div>
 
           <form className="space-y-3" onSubmit={submit}>
